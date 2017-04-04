@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="HotelFrontEnd.View.NewGuestView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HotelFrontEnd.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:MainViewModel="using:HotelFrontEnd.ViewModel">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.DataContext>
+            <MainViewModel:MainViewModel />
+        </Grid.DataContext>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <AppBarButton Icon="Back" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Click="AppBarButton_Click" />
+
+        <TextBlock Name="newGuestName_Text" Text="Name : " Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+        <TextBox Name="newGuestName_Field" Text="{Binding GuestName, Mode=TwoWay}" PlaceholderText="Name" Grid.Column="3" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                 VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+
+        <TextBlock Name="newGuestAdress_Text" Text="Adress : " Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+        <TextBox Name="newGuestTlf_Adress" Text="{Binding GuestAdress, Mode=TwoWay}" PlaceholderText="Adress" Grid.Column="3" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                 VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+        <TextBlock Name="newGuestTlf_Text" Text="Phone Nr : " Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,20,0"  />
+        <TextBox Name="newGuestTlf_Field" Text="{Binding GuestPhone, Mode=TwoWay}" PlaceholderText="Phone nr" Grid.Column="3" Grid.Row="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                 VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+        <Button Name="NewGuest_Add" Command="{Binding AddGuestCommand}" Content="Add" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="50,0,50,0" />
+
+
+    </Grid>
+</Page>

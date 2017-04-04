@@ -13,18 +13,23 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace HotelFrontEnd
+namespace HotelFrontEnd.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class NewGuestView : Page
     {
-        public MainPage()
+        public NewGuestView()
         {
             this.InitializeComponent();
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            base.Frame.Navigate(typeof(MainPage));
         }
     }
 }
