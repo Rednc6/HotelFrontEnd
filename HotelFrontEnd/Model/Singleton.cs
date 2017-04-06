@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using Windows.UI.Popups;
 
 namespace HotelFrontEnd.Model
 {
-    class Singleton
+    class Singleton : INotifyPropertyChanged
     {
         // Singleton
         private static readonly Singleton _instance = new Singleton();
@@ -20,18 +21,30 @@ namespace HotelFrontEnd.Model
 
         public ObservableCollection<Guest> GuestCollection { get; set; }
 
+        private int _selectedIndexCB;
+        public int SelectedIndexCB
+        {
+            get { return _selectedIndexCB; }
+            set
+            {
+                _selectedIndexCB = value;
+                OnPropertyChanged(nameof(SelectedIndexCB));
+            }
+        }
+
         // CTOR
-        public Singleton()
+        private Singleton()
         {
             GuestCollection = new ObservableCollection<Guest>();
             Load();
         }
 
-        // Methods
+        #region Methods
         public void AddGuest(Guest GuestToAdd)
         {
             Persistency.PersistencyService.PostGuest(GuestToAdd);
             GuestCollection.Add(GuestToAdd);
+            SelectedIndexCB = 0;
         }
 
         public void PutGuest(Guest GuestToPut)
@@ -54,6 +67,7 @@ namespace HotelFrontEnd.Model
             try
             {
                 GuestCollection = Persistency.PersistencyService.GetGuest();
+                SelectedIndexCB = 0;
             }
             catch (Exception e)
             {
@@ -65,6 +79,13 @@ namespace HotelFrontEnd.Model
             }
         }
 
+        //PropetyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
+        #endregion
     }
 }

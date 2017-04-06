@@ -20,16 +20,16 @@ namespace HotelFrontEnd.Commen
             this._execute = execute;
             this._canExecute = canExecute;
 
-            this.canExecuteChangedEventTimer = new DispatcherTimer();
-            this.canExecuteChangedEventTimer.Tick += canExecuteChangedEventTimer_Tick;
-            this.canExecuteChangedEventTimer.Interval = new TimeSpan(0, 0, 1);
-            this.canExecuteChangedEventTimer.Start();
+            //this.canExecuteChangedEventTimer = new DispatcherTimer();
+            //this.canExecuteChangedEventTimer.Tick += canExecuteChangedEventTimer_Tick;
+            //this.canExecuteChangedEventTimer.Interval = new TimeSpan(0, 0, 1);
+            //this.canExecuteChangedEventTimer.Start();
         }
 
-        private void canExecuteChangedEventTimer_Tick(object sender, object e)
-        {
-            this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+        //private void canExecuteChangedEventTimer_Tick(object sender, object e)
+        //{
+        //    this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        //}
 
         public bool CanExecute(object parameter)
         {

@@ -11,21 +11,14 @@ namespace HotelFrontEnd.ViewModel
 {
     class BookingViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Guest> _guestCollection;
-
-        public ObservableCollection<Guest> GuestCollection
-        {
-            get { return _guestCollection; }
-            set { _guestCollection = value; }
-        }
-
-
+        public Singleton GuestSingl { get; set; }
 
         //CTOR
         public BookingViewModel()
         {
-
+            GuestSingl = Singleton.Instance;
         }
+
 
         //PropetyChanged
         public event PropertyChangedEventHandler PropertyChanged;
