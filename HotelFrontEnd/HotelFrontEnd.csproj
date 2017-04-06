@@ -96,10 +96,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commen\RelayCommand.cs" />
+    <Compile Include="Converter\DateTimeConverter.cs" />
     <Compile Include="Handler\GuestHandler.cs" />
     <Compile Include="Model\Guest.cs" />
     <Compile Include="Model\Singleton.cs" />
     <Compile Include="Persistency\PersistencyService.cs" />
+    <Compile Include="ViewModel\BookingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\BookingsView.xaml.cs">
       <DependentUpon>BookingsView.xaml</DependentUpon>
