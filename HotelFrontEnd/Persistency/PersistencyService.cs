@@ -15,6 +15,7 @@ namespace HotelFrontEnd.Persistency
     {
         const string serverURL = "http://hotelbackend20170404114439.azurewebsites.net";
 
+        #region GuestServices
         // Post 
         public static void PostGuest(Guest PostGuest)
         {
@@ -131,5 +132,126 @@ namespace HotelFrontEnd.Persistency
                 return null;
             }
         }
+        #endregion
+
+
+        #region BookingServices
+
+        public static ObservableCollection<Booking> GetBooking()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serverURL);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = client.GetAsync("api/Bookings").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var BookingList = response.Content.ReadAsAsync<ObservableCollection<Booking>>().Result;
+                    return BookingList;
+                }
+
+                return null;
+            }
+        }
+
+        public static void BookingCommand(String command, Booking booking)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serverURL);
+                client.DefaultRequestHeaders.Clear();
+
+                switch (command)
+                {
+                    case "post":
+                        try
+                        {
+                            var response = client.PostAsJsonAsync<Booking>("api/bookings", booking).Result;
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                MessageDialog success = new MessageDialog("Booking is complete");
+                                success.Commands.Add(new UICommand { Label = "Ok" });
+                                success.ShowAsync().AsTask();
+                                break;
+                            }
+                            else
+                            {
+                                MessageDialog Error = new MessageDialog("Error: Booking failed");
+                                Error.Commands.Add(new UICommand { Label = "Ok" });
+                                Error.ShowAsync().AsTask();
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            MessageDialog Error = new MessageDialog("Error : " + e);
+                            Error.Commands.Add(new UICommand { Label = "Ok" });
+                            Error.ShowAsync().AsTask();
+                        }
+                        break;
+                    case "put":
+                        String bookingToUpdate = "api/bookings" + booking.Booking_ID.ToString();
+
+                        var ExistCheck = client.GetAsync(bookingToUpdate).Result;
+
+                        if(ExistCheck.IsSuccessStatusCode)
+                        {
+                            try
+                            {
+                                var response = client.PutAsJsonAsync<Booking>(bookingToUpdate, booking).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    MessageDialog success = new MessageDialog("Booking updated");
+                                    success.Commands.Add(new UICommand { Label = "Ok" });
+                                    success.ShowAsync().AsTask();
+                                    break;
+                                } 
+                            }
+                            catch (Exception e)
+                            {
+                                MessageDialog Error = new MessageDialog("Error : " + e);
+                                Error.Commands.Add(new UICommand { Label = "Ok" });
+                                Error.ShowAsync().AsTask();
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            MessageDialog success = new MessageDialog("Booking was not found!");
+                            success.Commands.Add(new UICommand { Label = "Ok" });
+                            success.ShowAsync().AsTask();
+                        }
+                        break;
+                    case "delete":
+                        String bookingToDelete = "api/bookings" + booking.Booking_ID.ToString();
+
+                        var DeleteBooking = client.DeleteAsync(bookingToDelete).Result;
+
+                        try
+                        {
+                            if (DeleteBooking.IsSuccessStatusCode)
+                            {
+                                MessageDialog msg = new MessageDialog("Booking has been deleted!");
+                                msg.Commands.Add(new UICommand { Label = "Ok" });
+                                msg.ShowAsync().AsTask();
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            MessageDialog Error = new MessageDialog("Error : " + e);
+                            Error.Commands.Add(new UICommand { Label = "Ok" });
+                            Error.ShowAsync().AsTask();
+                        }
+                        break;
+                }
+            }
+        }
+
+        #endregion
     }
 }
