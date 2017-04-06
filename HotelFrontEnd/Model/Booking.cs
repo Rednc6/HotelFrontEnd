@@ -25,6 +25,14 @@ namespace HotelFrontEnd.Model
             this.Date_To = DateTimeConverter.DateTimeLeave(DateTo);
         }
 
+        public Booking(int GuestID, int RoomID, DateTimeOffset DateFrom, DateTimeOffset DateTo)
+        {
+            this.Guest_ID = GuestID;
+            this.Room_ID = RoomID;
+            this.Date_From = DateTimeConverter.DateTimeArrive(DateFrom);
+            this.Date_To = DateTimeConverter.DateTimeLeave(DateTo);
+        }
+
         public override string ToString()
         {
             return $"ID: {Booking_ID} - Guest: {Guest_ID} Room: {Room_ID}";

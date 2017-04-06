@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HotelFrontEnd.Commen;
 using HotelFrontEnd.Persistency;
+using HotelFrontEnd.Handler;
 
 namespace HotelFrontEnd.ViewModel
 {
@@ -61,12 +62,19 @@ namespace HotelFrontEnd.ViewModel
             }
         }
 
+        public BookingHandler bh { get; set; }
 
         //CTOR
         public BookingViewModel()
         {
             GuestSingl = Singleton.Instance;
-//            AddBookingCommand = new RelayCommand();
+            bh = new BookingHandler(this);
+            AddBookingCommand = new RelayCommand(bh.AddBooking, null);
+
+            DateTime dt = System.DateTime.Now;
+            DateTo = new DateTimeOffset(dt.Year, dt.Month, dt.Day, 0, 0, 0, 0, new TimeSpan());
+            DateFrom = new DateTimeOffset(dt.Year, dt.Month, dt.Day, 0, 0, 0, 0, new TimeSpan());
+
         }
 
 
