@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Commen\RelayCommand.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
+    <Compile Include="Handler\BookingHandler.cs" />
     <Compile Include="Handler\GuestHandler.cs" />
     <Compile Include="Model\Booking.cs" />
     <Compile Include="Model\Guest.cs" />
