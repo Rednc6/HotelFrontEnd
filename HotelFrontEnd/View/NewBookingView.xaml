@@ -10,9 +10,10 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.DataContext>
-            <vm:BookingViewModel />
+            <vm:MainViewModel />
         </Grid.DataContext>
-        
+
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -36,8 +37,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <AppBarButton Icon="Back" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AppBarButton_Click" />
 
-        <ComboBox Header="Which guest will be booking?" ItemsSource="{Binding GuestSingl.GuestCollection, Mode=TwoWay}" SelectedIndex="{Binding GuestSingl.SelectedIndexCB, Mode=TwoWay}" x:Name="GuestList" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+             <ComboBox Header="Which guest will be booking?" ItemsSource="{Binding GuestSingl.GuestCollection, Mode=TwoWay}" SelectedIndex="{Binding GuestSingl.SelectedIndexCB, Mode=TwoWay}" x:Name="GuestList" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
         <CalendarDatePicker Header="Check in date" x:Name="DateFrom" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
         <CalendarDatePicker Header="Check out date" x:Name="DateTo" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
         <ComboBox Header="Available rooms" ItemsSource="{Binding null}" SelectedIndex="{Binding null}" x:Name="RoomList" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>

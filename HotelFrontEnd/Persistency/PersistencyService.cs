@@ -114,6 +114,7 @@ namespace HotelFrontEnd.Persistency
         }
 
 
+        // make view => call view instead thus getting booking information as well.
         public static ObservableCollection<Guest> GetGuest()
         {
             using (var client = new HttpClient())
