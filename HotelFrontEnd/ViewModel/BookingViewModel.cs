@@ -91,6 +91,7 @@ namespace HotelFrontEnd.ViewModel
             GuestSingl = Singleton.Instance;
             bh = new BookingHandler(this);
             AddBookingCommand = new RelayCommand(bh.AddBooking, null);
+            AvailableRooms = new ObservableCollection<Room>();
 
             DateTime dt = System.DateTime.Now;
             DateTo = new DateTimeOffset(dt.Year, dt.Month, dt.Day, 0, 0, 0, 0, new TimeSpan());

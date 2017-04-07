@@ -39,40 +39,36 @@
         </Grid.RowDefinitions>
 
 
-        <ListView Name="GuestBooking_ViewList" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="6" BorderBrush="Black" BorderThickness="2" 
+        <ListView SelectedItem="{Binding SelectedGuestAndBookngs, Mode=TwoWay}" ItemsSource="{Binding GuestAndBookings}" Name="GuestBooking_ViewList" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="6" BorderBrush="Black" BorderThickness="2" 
                   VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,0,15,0"/>
 
-        <ListView Name="Booking_ViewList" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="6" BorderBrush="Black" BorderThickness="2" 
+        <ListView SelectedItem="{Binding SelectedBooking, Mode=TwoWay}" ItemsSource="{Binding GuestBookings}" Name="Booking_ViewList" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="6" BorderBrush="Black" BorderThickness="2" 
                   VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
 
-        <Button Name="Delete" Content="Delete" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+        <Button Command="{Binding DeleteCommand}" Name="Delete" Content="Delete" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,15,0,15" />
 
         <TextBlock Name="GuestID_Text" Text="Guest Navn : " Grid.Column="4" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right"   />
-        <TextBox Name="SelectedGuest_Text" Text="Guest Navn " Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" 
-                 HorizontalAlignment="Center" BorderThickness="0" />
+        <TextBlock Name="SelectedGuest_Text" Text="{Binding SelectedGuestAndBookngs.Name, Mode=TwoWay}" Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" 
+                 HorizontalAlignment="Center" />
 
         <TextBlock Name="RoomID_Text" Text="Room : " Grid.Column="4" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right"   />
-        <TextBox Name="SelectedRoom_Text" Text="Room ID " Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Center" 
-                 HorizontalAlignment="Center" BorderThickness="0" />
+        <TextBlock Name="SelectedRoom_Text" Text="{Binding SelectedBooking.Room_ID}" Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Center" 
+                 HorizontalAlignment="Center" />
 
 
         <TextBlock Name="BookingID_Text" Text="Booking ID : " Grid.Column="4" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right"   />
-        <TextBox Name="SelectedBooking_Text" Text="Booking ID " Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="4" VerticalAlignment="Center" 
-                 HorizontalAlignment="Center" BorderThickness="0" />
+        <TextBlock Name="SelectedBooking_Text" Text="{Binding SelectedBooking.Booking_ID }" Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="4" VerticalAlignment="Center" 
+                 HorizontalAlignment="Center" />
 
         <TextBlock Name="DateFrom_Text" Text="Date From : " Grid.Column="4" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Right"   />
-        <TextBox Name="SelectedDateFrom_Text" Text="Date From " Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Center" 
-                 HorizontalAlignment="Center" BorderThickness="0" />
+        <TextBlock Name="SelectedDateFrom_Text" Text="{Binding SelectedBooking.Date_From }" Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Center" 
+                 HorizontalAlignment="Center" />
 
 
         <TextBlock Name="DateTo_Text" Text="Date To : " Grid.Column="4" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Right"   />
-        <TextBox Name="SelectedDateTo_Text" Text="Date To " Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Center" 
-                 HorizontalAlignment="Center" BorderThickness="0" />
-
-
-        <Button Name="Edit" Content="Edit" Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,15,0,15" />
+        <TextBlock Name="SelectedDateTo_Text" Text="{Binding SelectedBooking.Date_To }" Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Center" 
+                 HorizontalAlignment="Center" />
 
         <AppBarButton Icon="Back" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AppBarButton_Click" />
 

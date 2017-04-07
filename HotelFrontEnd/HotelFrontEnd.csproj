@@ -102,6 +102,7 @@
     <Compile Include="Handler\ViewBookingHandler.cs" />
     <Compile Include="Model\Booking.cs" />
     <Compile Include="Model\Guest.cs" />
+    <Compile Include="Model\GuestAndBookings.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\Singleton.cs" />
     <Compile Include="Persistency\PersistencyService.cs" />

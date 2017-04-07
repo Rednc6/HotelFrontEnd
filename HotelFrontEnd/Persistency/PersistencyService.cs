@@ -13,7 +13,7 @@ namespace HotelFrontEnd.Persistency
 {
     class PersistencyService
     {
-        const string serverURL = "http://hotelbackendws20170407090840.azurewebsites.net/";
+        const string serverURL = "http://hotelwebapi20170407022644.azurewebsites.net/";
 
         #region GuestServices
         // Post 
@@ -159,7 +159,7 @@ namespace HotelFrontEnd.Persistency
 
         public static void BookingCommand(String command, Booking booking)
         {
-            using(var client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(serverURL);
                 client.DefaultRequestHeaders.Clear();
@@ -194,11 +194,11 @@ namespace HotelFrontEnd.Persistency
                         }
                         break;
                     case "put":
-                        String bookingToUpdate = "api/bookings" + booking.Booking_ID.ToString();
+                        String bookingToUpdate = "api/bookings/" + booking.Booking_ID.ToString();
 
                         var ExistCheck = client.GetAsync(bookingToUpdate).Result;
 
-                        if(ExistCheck.IsSuccessStatusCode)
+                        if (ExistCheck.IsSuccessStatusCode)
                         {
                             try
                             {
@@ -209,7 +209,7 @@ namespace HotelFrontEnd.Persistency
                                     success.Commands.Add(new UICommand { Label = "Ok" });
                                     success.ShowAsync().AsTask();
                                     break;
-                                } 
+                                }
                             }
                             catch (Exception e)
                             {
@@ -227,7 +227,7 @@ namespace HotelFrontEnd.Persistency
                         }
                         break;
                     case "delete":
-                        String bookingToDelete = "api/bookings" + booking.Booking_ID.ToString();
+                        String bookingToDelete = "api/bookings/" + booking.Booking_ID.ToString();
 
                         var DeleteBooking = client.DeleteAsync(bookingToDelete).Result;
 
@@ -270,7 +270,7 @@ namespace HotelFrontEnd.Persistency
                 var GetAllRooms = client.GetAsync("api/rooms").Result;
                 var GetAllBookings = client.GetAsync("api/bookings").Result;
 
-                if(GetAllRooms.IsSuccessStatusCode && GetAllBookings.IsSuccessStatusCode)
+                if (GetAllRooms.IsSuccessStatusCode && GetAllBookings.IsSuccessStatusCode)
                 {
                     var AllRooms = GetAllRooms.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
                     var AllBookings = GetAllBookings.Content.ReadAsAsync<List<Booking>>().Result;
@@ -280,7 +280,7 @@ namespace HotelFrontEnd.Persistency
                     {
                         var IsBooked = AllBookings.Where(b => b.Room_ID == r.Room_ID && (b.Date_From <= b.Date_To && b.Date_From >= b.Date_To || b.Date_From <= DateTo && b.Date_To >= DateFrom)).FirstOrDefault();
 
-                        if(IsBooked == null)
+                        if (IsBooked == null)
                         {
                             AvailableRooms.Add(r);
                         }
@@ -294,5 +294,64 @@ namespace HotelFrontEnd.Persistency
         }
 
         #endregion
+
+        #region DatabaseViewService
+
+        public static ObservableCollection<GuestAndBookings> GetDBView()
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serverURL);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                String ViewURL = "api/GuestBookingViews";
+
+                var GetViewData = client.GetAsync(ViewURL).Result;
+
+                if(GetViewData.IsSuccessStatusCode)
+                {
+                    var ViewList = GetViewData.Content.ReadAsAsync<ObservableCollection<GuestAndBookings>>().Result;
+                    return ViewList;
+                }
+
+            }
+            return null;
+        }
+
+        public static ObservableCollection<Booking> GetAllBookingsByGuestId(int GuestID)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serverURL);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                String GetBookingUrl = "api/bookings/";
+
+                var GetBookings = client.GetAsync(GetBookingUrl).Result;
+
+                if(GetBookings.IsSuccessStatusCode)
+                {
+                    var AllBookingsByGuestId = new ObservableCollection<Booking>();
+
+                    foreach (var item in GetBookings.Content.ReadAsAsync<ObservableCollection<Booking>>().Result)
+                    {
+                        if(item.Guest_ID == GuestID)
+                        {
+                            AllBookingsByGuestId.Add(item);
+                        }
+                    }
+
+                    return AllBookingsByGuestId;
+                }
+            }
+            return null;
+        }
+
+
+        #endregion
+
     }
+
 }
