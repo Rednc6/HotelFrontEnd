@@ -22,12 +22,8 @@ namespace HotelFrontEnd.Handler
 
         public void AddBooking()
         {
-            Booking newBooking = new Booking(Singleton.Instance.GuestCollection[Singleton.Instance.SelectedIndexCB].Guest_ID, 10, DateTimeConverter.DateTimeArrive(BookingViewModel.DateFrom), DateTimeConverter.DateTimeLeave(BookingViewModel.DateTo));
+            Booking newBooking = new Booking(0, Singleton.Instance.GuestCollection[Singleton.Instance.SelectedIndexCB].Guest_ID, BookingViewModel.AvailableRooms[BookingViewModel.SelectedIndexRoom].Room_ID, DateTimeConverter.DateTimeArrive(BookingViewModel.DateFrom), DateTimeConverter.DateTimeLeave(BookingViewModel.DateTo));
             PersistencyService.BookingCommand("post", newBooking);
-            MessageDialog test = new MessageDialog($"Test : {newBooking} - {newBooking.Date_From} - {newBooking.Date_To}");
-            test.Commands.Add(new UICommand { Label = "Ok" });
-            test.ShowAsync().AsTask();
-
         }
     } 
 }

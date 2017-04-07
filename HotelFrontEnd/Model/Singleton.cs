@@ -43,8 +43,6 @@ namespace HotelFrontEnd.Model
         public void AddGuest(Guest GuestToAdd)
         {
             Persistency.PersistencyService.PostGuest(GuestToAdd);
-            GuestCollection.Add(GuestToAdd);
-            SelectedIndexCB = 0;
         }
 
         public void PutGuest(Guest GuestToPut)

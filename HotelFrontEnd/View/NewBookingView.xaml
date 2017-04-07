@@ -42,7 +42,7 @@
         <ComboBox Header="Which guest will be booking?" ItemsSource="{Binding GuestSingl.GuestCollection, Mode=TwoWay}" SelectedIndex="{Binding GuestSingl.SelectedIndexCB, Mode=TwoWay}" x:Name="GuestList" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
         <CalendarDatePicker Date="{Binding DateFrom, Mode=TwoWay}" Header="Check in date" x:Name="DateFrom" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
         <CalendarDatePicker Date="{Binding DateTo, Mode=TwoWay}" Header="Check out date" x:Name="DateTo" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-        <ComboBox Header="Available rooms" ItemsSource="{Binding null}" SelectedIndex="{Binding null}" x:Name="RoomList" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <ComboBox Header="Available rooms" ItemsSource="{Binding AvailableRooms}" SelectedIndex="{Binding SelectedIndexRoom, Mode=TwoWay}" x:Name="RoomList" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
         <Button Command="{Binding AddBookingCommand}" x:Name="BookRoom" Content="Book stay!" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </Grid>
 </Page>

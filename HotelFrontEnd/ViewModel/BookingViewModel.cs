@@ -18,6 +18,7 @@ namespace HotelFrontEnd.ViewModel
         //RelayCommands
         public ICommand AddBookingCommand { get; set; }
         public Singleton GuestSingl { get; set; }
+        public BookingHandler bh { get; set; }
 
         private int _bookingID;
         public int BookingID
@@ -50,6 +51,7 @@ namespace HotelFrontEnd.ViewModel
             get { return _dateTo; }
             set { _dateTo = value;
                 OnPropertyChanged(nameof(DateTo));
+                CheckDates();
             }
         }
 
@@ -59,10 +61,29 @@ namespace HotelFrontEnd.ViewModel
             get { return _dateFrom; }
             set { _dateFrom = value;
                 OnPropertyChanged(nameof(DateFrom));
+                CheckDates();
             }
         }
 
-        public BookingHandler bh { get; set; }
+        private int _selectedIndexRoom;
+        public int SelectedIndexRoom
+        {
+            get { return _selectedIndexRoom; }
+            set { _selectedIndexRoom = value;
+                OnPropertyChanged(nameof(SelectedIndexRoom));
+            }
+        }
+
+
+        private ObservableCollection<Room> _availableRooms;
+        public ObservableCollection<Room> AvailableRooms
+        {
+            get { return _availableRooms; }
+            set { _availableRooms = value;
+                OnPropertyChanged(nameof(AvailableRooms));
+            }
+        }
+
 
         //CTOR
         public BookingViewModel()
@@ -77,6 +98,18 @@ namespace HotelFrontEnd.ViewModel
 
         }
 
+        private void CheckDates()
+        {
+            if(DateFrom < DateTo && DateFrom != DateTo)
+            {
+                AvailableRooms = PersistencyService.AvailableRooms(DateFrom, DateTo);
+
+                if(AvailableRooms.Count > 0)
+                {
+                    SelectedIndexRoom = 0;
+                }
+            }
+        }
 
         //PropetyChanged
         public event PropertyChangedEventHandler PropertyChanged;

@@ -13,7 +13,7 @@ namespace HotelFrontEnd.Persistency
 {
     class PersistencyService
     {
-        const string serverURL = "http://hotelbackend20170404114439.azurewebsites.net";
+        const string serverURL = "http://hotelbackendws20170407090840.azurewebsites.net/";
 
         #region GuestServices
         // Post 
@@ -250,6 +250,47 @@ namespace HotelFrontEnd.Persistency
                         break;
                 }
             }
+        }
+
+        #endregion
+
+        #region RoomServices
+
+        public static ObservableCollection<Room> AvailableRooms(DateTimeOffset datefrom, DateTimeOffset dateto)
+        {
+            DateTime DateFrom = Converter.DateTimeConverter.DateTimeArrive(datefrom);
+            DateTime DateTo = Converter.DateTimeConverter.DateTimeLeave(dateto);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serverURL);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var GetAllRooms = client.GetAsync("api/rooms").Result;
+                var GetAllBookings = client.GetAsync("api/bookings").Result;
+
+                if(GetAllRooms.IsSuccessStatusCode && GetAllBookings.IsSuccessStatusCode)
+                {
+                    var AllRooms = GetAllRooms.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+                    var AllBookings = GetAllBookings.Content.ReadAsAsync<List<Booking>>().Result;
+                    ObservableCollection<Room> AvailableRooms = new ObservableCollection<Room>();
+
+                    foreach (var r in AllRooms)
+                    {
+                        var IsBooked = AllBookings.Where(b => b.Room_ID == r.Room_ID && (b.Date_From <= b.Date_To && b.Date_From >= b.Date_To || b.Date_From <= DateTo && b.Date_To >= DateFrom)).FirstOrDefault();
+
+                        if(IsBooked == null)
+                        {
+                            AvailableRooms.Add(r);
+                        }
+                    }
+
+                    return AvailableRooms;
+                }
+            }
+
+            return null;
         }
 
         #endregion
